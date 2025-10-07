@@ -611,7 +611,7 @@ function refreshRoomBoard() {
     const refreshSpinner = document.getElementById('refreshSpinner');
     if (refreshSpinner) refreshSpinner.style.display = 'inline-block';
 
-    const url = '<?php echo $GLOBALS['baseUrl']; ?>/api/room_status.php?status=' + encodeURIComponent(getStatusFilter());
+    const url = '<?php echo $appPath ?? '/hotel-app'; ?>/api/room_status.php?status=' + encodeURIComponent(getStatusFilter());
 
     fetch(url, {
         method: 'GET',
@@ -875,7 +875,7 @@ function initializeNotificationChecking() {
 }
 
 function checkUrgentNotifications() {
-    fetch('<?php echo $GLOBALS['baseUrl']; ?>/api/check_notifications.php', {
+    fetch('<?php echo $appPath ?? '/hotel-app'; ?>/api/check_notifications.php', {
         method: 'GET',
         credentials: 'same-origin',
         headers: {
@@ -918,7 +918,7 @@ function checkForNotifications(rooms) {
 
 function checkShortTermCheckout(room) {
     // Fetch booking details for the room
-    fetch(`<?php echo $GLOBALS['baseUrl']; ?>/api/get_room_booking.php?room_id=${room.id}`, {
+    fetch(`<?php echo $appPath ?? '/hotel-app'; ?>/api/get_room_booking.php?room_id=${room.id}`, {
         method: 'GET',
         credentials: 'same-origin',
         headers: {
@@ -1108,7 +1108,7 @@ function getRoomStatusText(status) {
 
 // Generate action buttons based on room status
 function generateActionButtons(room) {
-    const baseUrl = '<?php echo $GLOBALS['baseUrl']; ?>';
+    const baseUrl = '<?php echo $appPath ?? '/hotel-app'; ?>';
     const csrfToken = '<?php echo get_csrf_token(); ?>';
     let buttons = '';
 

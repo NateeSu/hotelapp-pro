@@ -371,7 +371,7 @@ document.addEventListener('DOMContentLoaded', function() {
         costDetails.innerHTML = '<div class="text-center"><i class="bi bi-hourglass-split"></i> กำลังคำนวณ...</div>';
 
         // AJAX call to calculate cost
-        fetch('<?php echo $GLOBALS['baseUrl']; ?>/api/calculate_transfer.php', {
+        fetch('<?php echo $appPath ?? '/hotel-app'; ?>/api/calculate_transfer.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
