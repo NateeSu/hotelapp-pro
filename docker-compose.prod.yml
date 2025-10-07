@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container_name: hotel-web
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./src:/var/www/html
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_NAME=hotel_management
+      - DB_USER=root
+      - DB_PASSWORD=t0tFlyToDream
+      - APP_ENV=production
+      - APP_DEBUG=false
+    networks:
+      - hotel-network
+
+  db:
+    image: mysql:8.0
+    container_name: hotel-db
+    restart: unless-stopped
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=t0tFlyToDream
+      - MYSQL_DATABASE=hotel_management
+    volumes:
+      - hotel-db-data:/var/lib/mysql
+      - ./database/init:/docker-entrypoint-initdb.d
+    networks:
+      - hotel-network
+    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: hotel-phpmyadmin
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    environment:
+      - PMA_HOST=db
+      - PMA_ARBITRARY=1
+    depends_on:
+      - db
+    networks:
+      - hotel-network
+
+volumes:
+  hotel-db-data:
+
+networks:
+  hotel-network:
+    driver: bridge

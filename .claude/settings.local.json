@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(tree:*)",
+      "Bash(docker-compose:*)",
+      "Bash(docker exec:*)",
+      "Read(//d/**)",
+      "Bash(docker cp:*)",
+      "Bash(cat:*)",
+      "Bash(docker logs:*)",
+      "Bash(git init:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

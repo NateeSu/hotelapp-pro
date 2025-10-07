@@ -1,0 +1,54 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    container_name: myproject-web
+    ports:
+      - "8080:80"
+    volumes:
+      - ./src:/var/www/html
+    depends_on:
+      - db
+    environment:
+      - DB_HOST=db
+      - DB_NAME=hotel_management
+      - DB_USER=root
+      - DB_PASSWORD=t0tFlyToDream
+    networks:
+      - myproject-network
+
+  db:
+    image: mysql:8.0
+    container_name: myproject-db
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=t0tFlyToDream
+      - MYSQL_DATABASE=hotel_management
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=t0tFlyToDream
+    volumes:
+      - db-data:/var/lib/mysql
+    networks:
+      - myproject-network
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: myproject-phpmyadmin
+    ports:
+      - "8081:80"
+    environment:
+      - PMA_HOST=db
+      - PMA_ARBITRARY=1
+    depends_on:
+      - db
+    networks:
+      - myproject-network
+
+volumes:
+  db-data:
+
+networks:
+  myproject-network:
+    driver: bridge
